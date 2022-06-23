@@ -1,0 +1,44 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="loginpage">
+        <h1>Login</h1>
+            <div>
+                <input type="text" name="username" id="username" required placeholder="Username">
+            </div> 
+            <div>
+                <input type="password" name="password" id="password" required placeholder="Password">
+            </div>
+            <button type="submit" name="login" onclick="loginfunction()">Login</button>
+            <p id="res"></p>
+            <p id="p2"> Not a member yet? <a href= "signup.html"> Signup</a></p>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>
+        function loginfunction() {
+			var username = document.getElementById("username").value;
+			var password = document.getElementById("password").value;
+			$.ajax({
+				type : "POST",  //type of method
+				url  : "confirm.php",  //your page
+				data : { username : username, password : password },// passing the values
+				success : function(resp){
+					console.log(resp);
+					var data = $.parseJSON(resp);
+					if (data.msg == 'true') {
+						window.location.href = "homepage.html"; // direct to homepage
+					}
+					else { 
+						document.getElementById("res").innerHTML = "wrong username or password";
+					}	
+				}
+				});}
+    </script>
+</body>
+</html>
